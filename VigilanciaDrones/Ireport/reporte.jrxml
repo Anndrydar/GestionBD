@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ec0ffe9-8ed9-4421-b401-cc4208eb1b73">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select count(v.descripcion_actividad_realizada) as actividad_desarrollada,
+d.placa as nombre_drone
+from drone d
+inner join piloto pi on pi.id_piloto = d.id_piloto
+inner join ubicacion_drone u on d.id_dron = u.id_dron
+inner join vigilancia_drone v on d.id_dron = v.id_dron
+inner join HORARIO_VIGILANCIA_DRONE hrv on v.id_vigilancia = hrv.id_vigilancia
+group by d.placa;]]>
+	</queryString>
+	<field name="actividad_desarrollada" class="java.lang.Long"/>
+	<field name="nombre_drone" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="7" width="472" height="72" uuid="a9bc6c27-6863-4274-a750-f47a6d96d6bb"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividades de vigilancias desarrolladas por drones en el presente año(2022)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="378" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="52" y="17" width="461" height="346" uuid="be25f581-aebc-4ed1-ba69-bc8c473c37df"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nombre_drone}]]></seriesExpression>
+						<categoryExpression><![CDATA["Vigilancias realizadas por drones Año 2022"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{actividad_desarrollada}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="139" y="11" width="100" height="20" uuid="badc98ea-9f08-4635-b13f-4d602b2da49f"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
